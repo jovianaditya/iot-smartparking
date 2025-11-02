@@ -1,0 +1,112 @@
+networks:
+  default:
+    name: iot
+    driver: bridge
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.18
+    container_name: mosquitto
+    ports:
+      - "${MOSQUITTO_PORT}:8883" #TLS
+    volumes:
+    - "${PATH_MOSQ}/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+    - "${PATH_MOSQ}/data:/mosquitto/data"
+    - "${PATH_MOSQ}/log:/mosquitto/log"
+    - "${PATH_MOSQ}/certs:/mosquitto/config/certs"   
+    - "${PATH_MOSQ}/passwd:/mosquitto/config/passwd"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -h 35-192-213-4.sslip.io -p 8883 --capath /etc/ssl/certs -u 'iotuser' -P 'iotadmin' -t '$$SYS/broker/version' -C 1 -W 10 >/dev/null 2>&1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+  nodered:
+    image: nodered/node-red:3.1.9
+    container_name: nodered
+    ports:
+      - "127.0.0.1:${NR_PORT}:1880"
+    environment:
+      - TZ=${TZ}
+      - NODE_RED_CRED_SECRET=${NODE_RED_CRED_SECRET}
+    volumes:
+      - "${PATH_NODE_RED}:/data"
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      # terima 200..399 (OK/redirect) biar login redirect tidak dianggap gagal
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://127.0.0.1:1880/nodered/',r=>process.exit((r.statusCode>=200&&r.statusCode<400)?0:1)).on('error',()=>process.exit(1))\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    depends_on:
+      - nodered
+    ports:
+      - "${CADDY_HTTP_PORT}:80"
+      - "${CADDY_HTTPS_PORT}:443"
+    environment:
+      - TZ=${TZ}
+      - DOMAIN=${DOMAIN}     # so Caddyfile can use {$DOMAIN}
+    volumes:
+      - "${PATH_CADDY}/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "${PATH_CADDY}/data:/data"
+      - "${PATH_CADDY}/config:/config"
+    restart: unless-stopped
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=${INFLUXDB_INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+      - TZ=${TZ}
+      - INFLUXD_PUBLIC_URL=${INFLUXD_PUBLIC_URL}
+    volumes:
+      - "${PATH_INFLUX}/data:/var/lib/influxdb2"
+      - "${PATH_INFLUX}/config:/etc/influxdb2"
+    ports:
+      - "127.0.0.1:${INFLUXDB_PORT}:8086"
+    healthcheck:
+      test: ["CMD-SHELL", "influx ping -host http://127.0.0.1:8086 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.4.3
+    container_name: grafana
+    ports:
+      - "127.0.0.1:${GRAFANA_PORT}:3000"
+    environment:
+      - TZ=${TZ}
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
+      - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL}
+      - GF_SERVER_SERVE_FROM_SUB_PATH=${GF_SERVE_FROM_SUB_PATH}
+    volumes:
+      - "${PATH_GRAFANA}:/var/lib/grafana"
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health | grep -q 'ok'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
