@@ -1,0 +1,1019 @@
+[
+    {
+        "id": "a1d78bd7da957558",
+        "type": "tab",
+        "label": "Smart Parking Flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "mqtt_internal",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Internal (1883)",
+        "broker": "35-192-213-4.sslip.io/",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "30",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "influx_cfg_v2",
+        "type": "influxdb",
+        "hostname": "http://influxdb:8086",
+        "port": "8086",
+        "protocol": "http",
+        "database": "iot",
+        "name": "InfluxDB v2",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": "10000",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "ui_group_main",
+        "type": "ui_group",
+        "name": "ESP32 Env",
+        "tab": "ui_tab_main",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_tab_main",
+        "type": "ui_tab",
+        "name": "IoT Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "97d77dc189d3d033",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "tab_parking",
+        "type": "ui_tab",
+        "name": "Smart Parking",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "grp_env",
+        "type": "ui_group",
+        "name": "Environment",
+        "tab": "tab_parking",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "grp_overview",
+        "type": "ui_group",
+        "name": "Overview",
+        "tab": "tab_parking",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "grp_table",
+        "type": "ui_group",
+        "name": "Slot Detail",
+        "tab": "tab_parking",
+        "order": 3,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "broker_mqtt",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "35-192-213-4.sslip.io",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "0f5839612036162a",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "Temperature °C",
+        "topic": "temperature",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "c2e478eb02567cd3",
+                "5e644d6d4d1481c5"
+            ]
+        ]
+    },
+    {
+        "id": "c2e478eb02567cd3",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "to number",
+        "func": "msg.payload = Number(msg.payload);\nif (isNaN(msg.payload)) return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "cba1ad77cf19e0c6"
+            ]
+        ]
+    },
+    {
+        "id": "cba1ad77cf19e0c6",
+        "type": "ui_gauge",
+        "z": "a1d78bd7da957558",
+        "name": "Temperature",
+        "group": "grp_env",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Temperature (°C)",
+        "label": "°C",
+        "format": "{{value | number:1}}",
+        "min": 0,
+        "max": 60,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 540,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "de7fe3b0dd8fd627",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "Humidity %",
+        "topic": "humidity",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 170,
+        "wires": [
+            [
+                "d9cf52a2d416057e",
+                "307dcac296d14858"
+            ]
+        ]
+    },
+    {
+        "id": "d9cf52a2d416057e",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "to number",
+        "func": "msg.payload = Number(msg.payload);\nif (isNaN(msg.payload)) return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 170,
+        "wires": [
+            [
+                "bc561aea39b4bb11"
+            ]
+        ]
+    },
+    {
+        "id": "bc561aea39b4bb11",
+        "type": "ui_gauge",
+        "z": "a1d78bd7da957558",
+        "name": "Humidity",
+        "group": "grp_env",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Humidity (%)",
+        "label": "%",
+        "format": "{{value | number:0}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 540,
+        "y": 170,
+        "wires": []
+    },
+    {
+        "id": "aced30fd7cc73db9",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "parking-slot1",
+        "topic": "parking-slot1",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "7831b5907de693e5",
+                "07e869b6fcd44f81",
+                "8734227426ef8c22"
+            ]
+        ]
+    },
+    {
+        "id": "65fc309e4659e680",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "parking-slot2",
+        "topic": "parking-slot2",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "f916df3197239057",
+                "07e869b6fcd44f81",
+                "8734227426ef8c22"
+            ]
+        ]
+    },
+    {
+        "id": "d29e3da83cb0f508",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "parking-slot3",
+        "topic": "parking-slot3",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "4c2056a474b16076",
+                "07e869b6fcd44f81",
+                "8734227426ef8c22"
+            ]
+        ]
+    },
+    {
+        "id": "7876d0b8561140b2",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "parking-slot4",
+        "topic": "parking-slot4",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "d4c6e606402b3ca8",
+                "07e869b6fcd44f81",
+                "8734227426ef8c22"
+            ]
+        ]
+    },
+    {
+        "id": "7831b5907de693e5",
+        "type": "change",
+        "z": "a1d78bd7da957558",
+        "name": "slot=SLOT-01",
+        "rules": [
+            {
+                "t": "set",
+                "p": "slot",
+                "pt": "msg",
+                "to": "SLOT-01",
+                "tot": "str"
+            }
+        ],
+        "x": 380,
+        "y": 260,
+        "wires": [
+            [
+                "38d69639a58aa2ab"
+            ]
+        ]
+    },
+    {
+        "id": "f916df3197239057",
+        "type": "change",
+        "z": "a1d78bd7da957558",
+        "name": "slot=SLOT-02",
+        "rules": [
+            {
+                "t": "set",
+                "p": "slot",
+                "pt": "msg",
+                "to": "SLOT-02",
+                "tot": "str"
+            }
+        ],
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "38d69639a58aa2ab"
+            ]
+        ]
+    },
+    {
+        "id": "4c2056a474b16076",
+        "type": "change",
+        "z": "a1d78bd7da957558",
+        "name": "slot=SLOT-03",
+        "rules": [
+            {
+                "t": "set",
+                "p": "slot",
+                "pt": "msg",
+                "to": "SLOT-03",
+                "tot": "str"
+            }
+        ],
+        "x": 380,
+        "y": 340,
+        "wires": [
+            [
+                "38d69639a58aa2ab"
+            ]
+        ]
+    },
+    {
+        "id": "d4c6e606402b3ca8",
+        "type": "change",
+        "z": "a1d78bd7da957558",
+        "name": "slot=SLOT-04",
+        "rules": [
+            {
+                "t": "set",
+                "p": "slot",
+                "pt": "msg",
+                "to": "SLOT-04",
+                "tot": "str"
+            }
+        ],
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "38d69639a58aa2ab"
+            ]
+        ]
+    },
+    {
+        "id": "9b9d07b21b6e1ee6",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "open-gate",
+        "topic": "open-gate",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "4c89aac4e1ed5335",
+                "07e869b6fcd44f81",
+                "f392945b96fead46"
+            ]
+        ]
+    },
+    {
+        "id": "fcab86ee7f2575be",
+        "type": "mqtt in",
+        "z": "a1d78bd7da957558",
+        "name": "closed-gate",
+        "topic": "closed-gate",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "broker_mqtt",
+        "nl": false,
+        "rap": true,
+        "rh": 2,
+        "inputs": 0,
+        "x": 120,
+        "y": 480,
+        "wires": [
+            [
+                "4c89aac4e1ed5335",
+                "07e869b6fcd44f81",
+                "f392945b96fead46"
+            ]
+        ]
+    },
+    {
+        "id": "4c89aac4e1ed5335",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Gate -> flow.gate_state",
+        "func": "const isOpenTopic = (msg.topic === 'open-gate');\nconst val = String(msg.payload).trim() === '1';\nlet state = flow.get('gate_state') || 'CLOSED';\nif (isOpenTopic && val) state = 'OPEN';\nif (!isOpenTopic && val) state = 'CLOSED';\nflow.set('gate_state', state);\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38d69639a58aa2ab",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Per-slot: arrivals + income + row",
+        "func": "function fmt(ms){const s=Math.max(0,Math.floor(ms/1000));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`}function dayKey(ts){return new Date(ts).toISOString().slice(0,10)}const H=3600000,FIRST=5000,NEXT=3000;function fee(ms){if(ms<=0)return 0;if(ms<=H)return FIRST;return FIRST+NEXT*Math.ceil((ms-H)/H)}const slot=msg.slot||'SLOT-01';const now=Date.now();let map=flow.get('slotmap')||{};if(!map[slot]){map[slot]={state:null,lastChange:now,key:dayKey(now),arrivals:0,income:0,sessionStart:null}}let st=map[slot];const curKey=dayKey(now);if(curKey!==st.key){st.key=curKey;st.arrivals=0;st.income=0;st.sessionStart=(st.state==='occupied')?now:null;if(!st.lastChange)st.lastChange=now}let newState=null;if(typeof msg.payload==='string')newState=msg.payload.trim().toLowerCase();else if(typeof msg.payload==='boolean')newState=msg.payload?'occupied':'free';if(newState==='occupied'||newState==='empty'||newState==='free'){if(newState==='empty') newState='free';if(st.state==null){st.state=newState;if(newState==='occupied')st.sessionStart=now;if(!st.lastChange)st.lastChange=now}else if(newState!==st.state){if(st.state==='free'&&newState==='occupied'){st.arrivals++;st.sessionStart=now}else if(st.state==='occupied'&&newState==='free'){const dur=st.sessionStart?now-st.sessionStart:0;st.income+=fee(dur);st.sessionStart=null}st.state=newState;st.lastChange=now}}const row={slot:slot,status:(st.state||'FREE').toUpperCase(),duration:fmt(now-st.lastChange),last_change:new Date(st.lastChange).toLocaleString(),income:st.income,_lastChange:st.lastChange};flow.set('slotmap',map);return[{topic:'row',slot:slot,payload:row},{topic:'arrivals',slot:slot,payload:st.arrivals},{topic:'income',slot:slot,payload:st.income}];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 320,
+        "wires": [
+            [
+                "dcd7f36597c20f67",
+                "07e869b6fcd44f81"
+            ],
+            [
+                "0af1177d2fd64007"
+            ],
+            [
+                "fc21c8bdfe86497a"
+            ]
+        ]
+    },
+    {
+        "id": "51223145e804ec2f",
+        "type": "inject",
+        "z": "a1d78bd7da957558",
+        "name": "tick 1s",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "once": true,
+        "onceDelay": "0.8",
+        "topic": "tick",
+        "payload": "tick",
+        "payloadType": "str",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "dcd7f36597c20f67",
+                "fc21c8bdfe86497a",
+                "0af1177d2fd64007",
+                "07e869b6fcd44f81",
+                "4cd0697c5a69b07f"
+            ]
+        ]
+    },
+    {
+        "id": "dcd7f36597c20f67",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Combine rows -> Table",
+        "func": "function fmt(ms){const s=Math.max(0,Math.floor(ms/1000));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`}let rows=flow.get('rows')||{};const now=Date.now();if(msg.topic==='row'&&msg.slot){rows[msg.slot]=msg.payload}if(msg.topic==='tick'){Object.keys(rows).forEach(k=>{const r=rows[k];if(r&&r._lastChange){r.duration=fmt(now-r._lastChange)}})}flow.set('rows',rows);const order=['SLOT-01','SLOT-02','SLOT-03','SLOT-04'];const out=order.filter(s=>rows[s]).map(s=>{const o=rows[s];const {_lastChange,...rest}=o;return rest});return[{payload:out}];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 280,
+        "wires": [
+            [
+                "e18b55f7c0eb223a"
+            ]
+        ]
+    },
+    {
+        "id": "0af1177d2fd64007",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Aggregate Arrivals Today",
+        "func": "function dayKey(ts){return new Date(ts).toISOString().slice(0,10)}let map=flow.get('arr_map')||{};let key=flow.get('arr_key')||dayKey(Date.now());const now=Date.now(),curKey=dayKey(now);if(curKey!==key){map={};key=curKey}if(msg.topic==='arrivals'&&msg.slot){map[msg.slot]=Number(msg.payload)||0}flow.set('arr_map',map);flow.set('arr_key',key);let total=Object.values(map).reduce((a,b)=>a+(Number(b)||0),0);return {topic:'arrivals',payload: total};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 340,
+        "wires": [
+            [
+                "1a15e1082cfb12ae"
+            ]
+        ]
+    },
+    {
+        "id": "fc21c8bdfe86497a",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Aggregate Income Today",
+        "func": "function dayKey(ts){return new Date(ts).toISOString().slice(0,10)}let map=flow.get('income_map')||{};let key=flow.get('income_key')||dayKey(Date.now());const now=Date.now(),curKey=dayKey(now);if(curKey!==key){map={};key=curKey}if(msg.topic==='income'&&msg.slot){map[msg.slot]=Number(msg.payload)||0}flow.set('income_map',map);flow.set('income_key',key);let total=Object.values(map).reduce((a,b)=>a+(Number(b)||0),0);return {topic:'total',payload: total};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 380,
+        "wires": [
+            [
+                "1a15e1082cfb12ae"
+            ]
+        ]
+    },
+    {
+        "id": "1a15e1082cfb12ae",
+        "type": "ui_template",
+        "z": "a1d78bd7da957558",
+        "group": "grp_overview",
+        "name": "Totals (Vehicle + Revenue)",
+        "order": 2,
+        "width": 12,
+        "height": 2,
+        "format": "<style>.kpiGrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;align-items:center;gap:6px 16px;padding:14px 18px;border-radius:12px;background:linear-gradient(90deg,#0d6efd,#20c997);color:#fff}.kpiGrid .title{font-size:16px;font-weight:700;letter-spacing:.2px;opacity:.95}.kpiGrid .value{font-size:40px;font-weight:800;line-height:1;margin-top:2px}.kpiGrid .right{text-align:right}.kpiGrid .currency{margin-right:6px;font-weight:800}@media(max-width:768px){.kpiGrid .value{font-size:32px}.kpiGrid .title{font-size:14px}}</style><div class='kpiGrid'><div class='title'>Total Vehicle</div><div class='title right'>Total Revenue</div><div class='value'>{{ arrivals || 0 }}</div><div class='value right'><span class='currency'>Rp</span>{{ (total || 0) | number:0 }}</div></div><script>(function(scope){if(typeof scope.arrivals==='undefined')scope.arrivals=0;if(typeof scope.total==='undefined')scope.total=0;scope.$watch('msg',function(msg){if(!msg)return;if(msg.topic==='arrivals')scope.arrivals=Number(msg.payload)||0;if(msg.topic==='total')scope.total=Number(msg.payload)||0;});})(scope);</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1290,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "07e869b6fcd44f81",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Compute SLOT SISA (from slotmap)",
+        "func": "const map = flow.get('slotmap') || {}; const total = 4; let occupied = 0; Object.values(map).forEach(st => { if (st && st.state === 'occupied') occupied++; }); const free = Math.max(0, total - occupied); return {topic:'banner', payload: `SLOT SISA: ${free}/${total}`};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 420,
+        "wires": [
+            [
+                "b8a3c7445f6e1d8e"
+            ]
+        ]
+    },
+    {
+        "id": "b8a3c7445f6e1d8e",
+        "type": "ui_template",
+        "z": "a1d78bd7da957558",
+        "group": "grp_overview",
+        "name": "SLOT SISA Banner",
+        "order": 1,
+        "width": 12,
+        "height": 2,
+        "format": "<div style='display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#1b1c1d;color:#fff;border-radius:12px;font-weight:800;font-size:28px;'>{{msg.payload || 'SLOT SISA: --/4'}}</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 990,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e18b55f7c0eb223a",
+        "type": "ui_table",
+        "z": "a1d78bd7da957558",
+        "group": "grp_table",
+        "name": "Slot Table",
+        "order": 1,
+        "width": "24",
+        "height": "8",
+        "columns": [
+            {
+                "field": "slot",
+                "title": "Slot",
+                "width": "12%"
+            },
+            {
+                "field": "status",
+                "title": "Status",
+                "width": "12%"
+            },
+            {
+                "field": "duration",
+                "title": "Duration",
+                "width": "18%"
+            },
+            {
+                "field": "last_change",
+                "title": "Last Change",
+                "width": "38%"
+            },
+            {
+                "field": "income",
+                "title": "Income Today (Rp)",
+                "width": "20%"
+            }
+        ],
+        "outputs": 0,
+        "x": 1240,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ce502abc61456244",
+        "type": "ui_template",
+        "z": "a1d78bd7da957558",
+        "group": "grp_table",
+        "name": "Reset (Styled Right)",
+        "order": 2,
+        "width": 24,
+        "height": 1,
+        "format": "<style>.reset-wrap{width:100%;display:flex;justify-content:flex-end}.reset-btn{padding:10px 22px;border-radius:8px;border:1px solid #000;background:#fff;color:#000;font-weight:700;cursor:pointer;outline:none;transition:transform .05s ease, box-shadow .15s ease}.reset-btn:hover{box-shadow:0 2px 8px rgba(0,0,0,.18)}.reset-btn:active{transform:translateY(1px)}.reset-btn .fa{margin-right:8px}</style><div class=\"reset-wrap\"><button class=\"reset-btn\" ng-click=\"send({topic:'reset'})\"><i class=\"fa fa-undo\"></i>RESET</button></div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1240,
+        "y": 520,
+        "wires": [
+            [
+                "17ebe7ec6643c892"
+            ]
+        ]
+    },
+    {
+        "id": "a8e31dcba653b0c9",
+        "type": "change",
+        "z": "a1d78bd7da957558",
+        "name": "as tick",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "tick",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "tick",
+                "tot": "str"
+            }
+        ],
+        "x": 1010,
+        "y": 560,
+        "wires": [
+            [
+                "dcd7f36597c20f67",
+                "0af1177d2fd64007",
+                "fc21c8bdfe86497a",
+                "07e869b6fcd44f81",
+                "4cd0697c5a69b07f"
+            ]
+        ]
+    },
+    {
+        "id": "17ebe7ec6643c892",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Reset all (ordered -> then tick)",
+        "func": "const now=Date.now();let map=flow.get('slotmap')||{};Object.keys(map).forEach(k=>{const st=map[k];st.arrivals=0;st.income=0;st.key=new Date(now).toISOString().slice(0,10);st.sessionStart=(st.state==='occupied')?now:null;st.lastChange=now;});flow.set('slotmap',map);flow.set('arr_map',{});flow.set('arr_key',null);flow.set('income_map',{});flow.set('income_key',null);flow.set('rows',{});return {topic:'tick', payload:'tick'};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1520,
+        "y": 520,
+        "wires": [
+            [
+                "a8e31dcba653b0c9"
+            ]
+        ]
+    },
+    {
+        "id": "4cd0697c5a69b07f",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "Seed rows & KPI on tick",
+        "func": "if(msg.topic!=='tick') return null;function fmt(ms){const s=Math.max(0,Math.floor(ms/1000));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`}const now=Date.now();const map=flow.get('slotmap')||{};const msgs=[];['SLOT-01','SLOT-02','SLOT-03','SLOT-04'].forEach(slot=>{const st=map[slot];if(!st)return;const row={slot,status:(st.state||'FREE').toUpperCase(),duration:fmt(now-(st.lastChange||now)),last_change:new Date(st.lastChange||now).toLocaleString(),income:st.income||0,_lastChange:st.lastChange||now};msgs.push({topic:'row',slot,payload:row});});const arrivals={topic:'arrivals',payload:Object.values(map).reduce((a,st)=>a+(st.arrivals||0),0)};const income={topic:'total',payload:Object.values(map).reduce((a,st)=>a+(st.income||0),0)};return [msgs, [arrivals], [income]];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 560,
+        "wires": [
+            [
+                "dcd7f36597c20f67"
+            ],
+            [
+                "1a15e1082cfb12ae"
+            ],
+            [
+                "1a15e1082cfb12ae"
+            ]
+        ]
+    },
+    {
+        "id": "5e644d6d4d1481c5",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "TEMP → LP",
+        "func": "const site = \"lotA\"; const chip = \"esp32-parking-01\"; const now = Math.floor(Date.now()/1000); const t = Number(msg.payload); if (isNaN(t)) return null; msg.method=\"POST\"; msg.url=\"http://influxdb:8086/api/v2/write?org=iot&bucket=iot&precision=s\"; msg.headers={\"Authorization\":\"Token iot-influx\",\"Content-Type\":\"text/plain\"}; msg.payload=`env,site=${site},chipid=${chip} temp_c=${t} ${now}`; return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "0f385b0b310579c3"
+            ]
+        ]
+    },
+    {
+        "id": "307dcac296d14858",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "HUM → LP",
+        "func": "const site = \"lotA\"; const chip = \"esp32-parking-01\"; const now = Math.floor(Date.now()/1000); const h = Number(msg.payload); if (isNaN(h)) return null; msg.method=\"POST\"; msg.url=\"http://influxdb:8086/api/v2/write?org=iot&bucket=iot&precision=s\"; msg.headers={\"Authorization\":\"Token iot-influx\",\"Content-Type\":\"text/plain\"}; msg.payload=`env,site=${site},chipid=${chip} hum=${h} ${now}`; return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 210,
+        "wires": [
+            [
+                "0f385b0b310579c3"
+            ]
+        ]
+    },
+    {
+        "id": "8734227426ef8c22",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "SLOT state + session → LP",
+        "func": "const site = \"lotA\"; const topic=String(msg.topic||\"\"); const m=topic.match(/^parking\\-slot(\\d+)/); if(!m) return null; const slot=`SLOT-0${m[1]}`; const val=String(msg.payload||\"\").trim().toUpperCase(); const now=Math.floor(Date.now()/1000); const occ=(val===\"OCCUPIED\")?1:0; let lines=[]; lines.push(`slot_state,site=${site},slot=${slot} occupied=${occ}i ${now}`); const key=`sess_${slot}`; let s=context.get(key)||{in:null}; if(occ===1 && s.in==null){ s.in=now; lines.push(`session,site=${site},slot=${slot},event=arrive occupied=1i ${now}`); } else if(occ===0 && s.in!=null){ const dur=Math.max(0,now-s.in); const H=3600,FIRST=5000,NEXT=3000; const fee=(dur<=H)?FIRST: FIRST+NEXT*Math.ceil((dur-H)/H); lines.push(`session,site=${site},slot=${slot},event=leave occupied=0i,duration_s=${dur}i,fee=${fee}i ${now}`); s.in=null; } context.set(key,s); msg.method=\"POST\"; msg.url=\"http://influxdb:8086/api/v2/write?org=iot&bucket=iot&precision=s\"; msg.headers={\"Authorization\":\"Token iot-influx\",\"Content-Type\":\"text/plain\"}; msg.payload=lines.join(\"\\n\"); return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 300,
+        "wires": [
+            [
+                "0f385b0b310579c3"
+            ]
+        ]
+    },
+    {
+        "id": "f392945b96fead46",
+        "type": "function",
+        "z": "a1d78bd7da957558",
+        "name": "GATE → LP",
+        "func": "const site=\"lotA\"; const now=Math.floor(Date.now()/1000); let open=null; if(msg.topic===\"open-gate\")   open=(String(msg.payload).trim()===\"1\")?1:0; if(msg.topic===\"closed-gate\") open=(String(msg.payload).trim()===\"1\")?0:1; if(open===null) return null; msg.method=\"POST\"; msg.url=\"http://influxdb:8086/api/v2/write?org=iot&bucket=iot&precision=s\"; msg.headers={\"Authorization\":\"Token iot-influx\",\"Content-Type\":\"text/plain\"}; msg.payload=`gate,site=${site} open=${open}i ${now}`; return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "0f385b0b310579c3"
+            ]
+        ]
+    },
+    {
+        "id": "0f385b0b310579c3",
+        "type": "http request",
+        "z": "a1d78bd7da957558",
+        "name": "POST /api/v2/write",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://influxdb:8086/api/v2/write?org=iot&bucket=iot&precision=s",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 760,
+        "y": 210,
+        "wires": [
+            []
+        ]
+    }
+]
