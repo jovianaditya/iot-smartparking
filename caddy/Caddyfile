@@ -1,0 +1,17 @@
+{$DOMAIN} {
+  encode zstd gzip
+  @root path /
+  redir @root /nodered/ 301
+
+  @nodered path /nodered*
+  reverse_proxy @nodered nodered:1880
+
+  @grafana path /grafana*
+  reverse_proxy @grafana grafana:3000
+}
+
+# InfluxDB di subdomain
+influxdb.{$DOMAIN} {
+  encode zstd gzip
+  reverse_proxy http://influxdb:8086
+}
